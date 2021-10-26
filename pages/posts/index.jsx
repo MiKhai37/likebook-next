@@ -13,7 +13,7 @@ const Posts = () => {
 
   if (postsError) return "An error (posts) has occurred.";
   if (!postsData) return "Loading Posts...";
-  console.log(postsData);
+  
   return (
     <>
       <Title>Post Timeline</Title>

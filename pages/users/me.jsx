@@ -4,7 +4,7 @@ import useUser from '../../lib/useUser';
 
 const { Title } = Typography;
 
-const Me = ({ me }) => {
+const Me = () => {
   const { user } = useUser({ redirectTo: '/auth/login' })
 
   if (!user || user.isLoggedIn === false) {
@@ -14,7 +14,7 @@ const Me = ({ me }) => {
   return (
     <div>
       <Title>My Profile</Title>
-      <p>{me?.firstName + ' ' + me?.lastName}</p>
+      <p>{user?.data.firstName + ' ' + user?.data.lastName}</p>
     </div>
   )
 }

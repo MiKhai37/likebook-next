@@ -3,8 +3,8 @@ import { model, Schema } from 'mongoose';
 
 const CommentSchema = new Schema(
   {
-    post: { type: String, ref: "Post", required: true },
-    author: { type: String, ref: "User", required: true },
+    post: { type: String, ref: "Post", select: true, required: true },
+    author: { type: String, ref: "User",select: true, required: true },
     textContent: { type: String, required: true },
     creationTimestamp: { type: Date, required: true},
     updateTimestamp: { type: Date, required: true},

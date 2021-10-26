@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   };
 
   if (req.method === 'GET') {
-    const posts = await PostModel.find({ author: req.query.userId }).exec();
+    const posts = await PostModel.find({ author: req.query.userId }).populate('author').exec();
     const count = await PostModel.where({ author: req.query.userId }).countDocuments();
 
     const data = { count, posts }

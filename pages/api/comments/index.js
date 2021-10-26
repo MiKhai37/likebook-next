@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   };
 
   if (req.method === 'GET') {
-    const comments = await CommentModel.find().exec();
+    const comments = await CommentModel.find().populate('post').exec();
     const count = await CommentModel.countDocuments();
 
     const data = { count, comments };

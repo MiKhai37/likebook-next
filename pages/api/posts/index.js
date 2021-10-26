@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   // Get all posts
   if (req.method === 'GET') {
 
-    const posts = await getAllPosts();
+    const posts = await PostModel.find({}).populate('author').exec();
     res.status(200).json({ data: posts });
 
   };

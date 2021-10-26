@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   };
 
   if (req.method === 'GET') {
-    const comments = await CommentModel.find({ post: req.query.postId }).exec();
+    const comments = await CommentModel.find({ post: req.query.postId }).populate('author').exec();
     const count = await CommentModel.where({ post: req.query.postId }).countDocuments();
 
     const data = { count, comments }
