@@ -1,4 +1,4 @@
-import { UserModel } from "../../../../server/database/models";
+import { UserModel } from "../../../../models";
 
 export default async function getUserApi(req, res) {
 

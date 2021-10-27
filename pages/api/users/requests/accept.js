@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { UserModel } from '../../../../server/database/models';
+import { UserModel } from '../../../../models';
 
 export default async function handler(req, res) {
 

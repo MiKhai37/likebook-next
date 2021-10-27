@@ -1,4 +1,4 @@
-import { PostModel } from "../../../server/database/models";
+import { PostModel } from "../../../models";
 
 export default async function handler(req, res) {
 

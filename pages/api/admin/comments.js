@@ -1,4 +1,4 @@
-import { CommentModel } from "../../../server/database/models";
+import { CommentModel } from "../../../models";
 
 export default async function handler(req, res) {
 
