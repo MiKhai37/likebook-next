@@ -4,9 +4,9 @@ import { UserModel } from '../../../../server/database/models'
 export default async function handler(req, res) {
 
   // Not Logged In
-  if (!req.cookies.jwt) {
+/*   if (!req.cookies.jwt) {
     return res.status(403).json({ error: 'Need Authentication'});
-  };
+  }; */
 
   // Retrieve User Info from JWT cookie
   const decodedToken = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET);

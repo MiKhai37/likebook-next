@@ -1,10 +1,9 @@
 import React from 'react';
 import PostCard from '../../components/PostCard'
 import { Typography } from 'antd';
+import useSWR from 'swr';
 
 const { Title } = Typography;
-
-import useSWR from 'swr';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 

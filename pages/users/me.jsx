@@ -1,20 +1,17 @@
 import React from 'react';
 import { Layout, Menu, Breadcrumb, Card, Typography } from 'antd';
-import useUser from '../../lib/useUser';
+import { useUser } from '../../lib/auth/hooks';
 
 const { Title } = Typography;
 
 const Me = () => {
-  const { user } = useUser({ redirectTo: '/auth/login' })
 
-  if (!user || user.isLoggedIn === false) {
-    return 'User Auth Loading...'
-  }
+  const user = useUser();
 
   return (
     <div>
       <Title>My Profile</Title>
-      <p>{user?.data.firstName + ' ' + user?.data.lastName}</p>
+      <p>{user?.firstName + ' ' + user?.lastName}</p>
     </div>
   )
 }

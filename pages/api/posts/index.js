@@ -1,17 +1,16 @@
-import { getAllPosts } from "../../../server/database/post";
-import { PostModel, UserModel } from "../../../server/database/models";
+import { PostModel, UserModel } from "../../../models";
 import jwt from 'jsonwebtoken';
 
 export default async function handler(req, res) {
 
   // Not Logged In
-  if (!req.cookies.jwt) {
+/*   if (!req.cookies.jwt) {
     return res.status(403).json({ error: 'Need Authentication' });
-  };
+  }; */
 
   // Retrieve User Info from JWT cookie
-  const decodedToken = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET);
-  const user = await UserModel.findById(decodedToken.data._id).exec();
+/*   const decodedToken = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET);
+  const user = await UserModel.findById(decodedToken.data._id).exec(); */
 
   // Get all posts
   if (req.method === 'GET') {

@@ -3,9 +3,9 @@ import { UserModel } from "../../../../server/database/models";
 export default async function getUserApi(req, res) {
 
   // Not Logged In
-  if (!req.cookies.jwt) {
+/*   if (!req.cookies.jwt) {
     return res.status(403).json({ error: 'Need Authentication'});
-  };
+  }; */
 
   const user = await UserModel.findById(req.query.userId).exec();
 

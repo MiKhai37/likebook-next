@@ -3,9 +3,9 @@ import { CommentModel } from "../../../../server/database/models"
 export default async function handler(req, res) {
 
   // Not Logged In
-  if (!req.cookies.jwt) {
+/*   if (!req.cookies.jwt) {
     return res.status(403).json({ error: 'Need Authentication'});
-  };
+  }; */
 
   const comment = await CommentModel.findById(req.query.commentId).exec();
 

@@ -3,9 +3,9 @@ import { PostModel } from '../../../../server/database/models'
 export default async function handler(req, res) {
 
   // Not Logged In
-  if (!req.cookies.jwt) {
+/*   if (!req.cookies.jwt) {
     return res.status(403).json({ error: 'Need Authentication'});
-  };
+  }; */
 
   if (req.method === 'GET') {
     const posts = await PostModel.find({ author: req.query.userId }).populate('author').exec();

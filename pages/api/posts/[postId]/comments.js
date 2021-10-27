@@ -1,11 +1,11 @@
-import { CommentModel } from '../../../../server/database/models'
+import { CommentModel } from '../../../../models'
 
 export default async function handler(req, res) {
 
   // Not Logged In
-  if (!req.cookies.jwt) {
+/*   if (!req.cookies.jwt) {
     return res.status(403).json({ error: 'Need Authentication'});
-  };
+  }; */
 
   if (req.method === 'GET') {
     const comments = await CommentModel.find({ post: req.query.postId }).populate('author').exec();

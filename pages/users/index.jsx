@@ -2,7 +2,7 @@ import React from 'react';
 import UserCard from '../../components/UserCard';
 import { Typography, Row, Col } from 'antd';
 import useSWR from 'swr';
-import useUser from '../../lib/useUser'
+import { useUser } from '../../lib/auth/hooks';
 
 const { Title } = Typography;
 
@@ -11,11 +11,6 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 const Users = () => {
   const { data: usersData, error: usersError } = useSWR("/api/users", fetcher);
 
-  const { user } = useUser({ redirectTo: '/auth/login' })
-
-  if (!user || user.isLoggedIn === false) {
-    return 'User Auth Loading...'
-  }
 
   if (usersError) return "An error has occurred.";
   if (!usersData) return "Loading...";
