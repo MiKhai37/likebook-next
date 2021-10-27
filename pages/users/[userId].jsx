@@ -10,6 +10,7 @@ const { Title } = Typography;
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 
 const User = () => {
+  useUser({ redirectTo: '/auth/login' });
   const router = useRouter()
 
   const { error: userError, data: userData } = useSWR(`/api/users/${router.query.userId}`, fetcher);

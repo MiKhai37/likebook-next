@@ -6,9 +6,7 @@ import { useUser } from '../../lib/auth/hooks';
 const { Title } = Typography;
 
 const Register = () => {
-
-  useUser({ redirectTo: '/', redirectIfFound: true })
-
+  useUser({ redirectTo: '/users/me', redirectIfFound: true })
   const [errorMsg, setErrorMsg] = useState('')
 
   const onFinish = async (values) => {

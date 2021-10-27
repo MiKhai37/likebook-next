@@ -1,11 +1,12 @@
 import { CommentModel } from '../../../../models'
+import { getLoginSession } from '../../../../lib/auth/auth';
 
 export default async function handler(req, res) {
 
-  // Not Logged In
-/*   if (!req.cookies.jwt) {
-    return res.status(403).json({ error: 'Need Authentication'});
-  }; */
+  const session = await getLoginSession(req);
+  if (!session) {
+    res.send({ error: 'You must be sign in to view the protected content on this page.' });
+  };
 
   if (req.method === 'GET') {
     const comments = await CommentModel.find({ author: req.query.userId }).exec();

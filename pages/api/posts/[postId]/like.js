@@ -1,34 +1,32 @@
-import { PostModel, UserModel } from "../../../../models";
-import jwt from 'jsonwebtoken';
+import { PostModel } from "../../../../models";
+import { getLoginSession } from "../../../../lib/auth/auth";
+import { findUser } from "../../../../lib/auth/user";
 
 export default async function handler(req, res) {
 
-    // Not Logged In
-/*     if (!req.cookies.jwt) {
-      return res.status(403).json({ error: 'Need Authentication' });
-    }; */
-  
-    // Retrieve User Info from JWT cookie
-    const decodedToken = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET);
-    const user = await UserModel.findById(decodedToken.data._id).exec();
+  const session = await getLoginSession(req);
+  if (!session) {
+    res.send({ error: 'You must be sign in to view the protected content on this page.' });
+  };
+  const user = (session && (await findUser(session))) ?? null;
 
-    const post = await PostModel.findById(req.query.postId).exec();
-    if (!post) {
-      return res.status(404).json({ data: 'Post not found' });
+  const post = await PostModel.findById(req.query.postId).exec();
+  if (!post) {
+    return res.status(404).json({ data: 'Post not found' });
+  };
+
+  // Toggle like
+  if (req.method === 'PUT') {
+
+    if (!post.likes.includes(user._id)) {
+      post.likes = [...post.likes, user._id];
+    } else {
+      const index = post.likes.indexOf(user._id);
+      post.likes.splice(index, 1);
     };
 
-    // Toggle like
-    if (req.method === 'PUT') {
-      
-      if (!post.likes.includes(user._id)) {
-        post.likes = [...post.likes, user._id];
-      } else {
-        const index = post.likes.indexOf(user._id);
-        post.likes.splice(index, 1);
-      };
+    const updatePost = await post.save();
 
-      const updatePost = await post.save();
-
-      return res.status(200).json({ message:'Post liked/unliked', data: updatePost });
-    }
+    return res.status(200).json({ message: 'Post liked/unliked', data: updatePost });
+  }
 }

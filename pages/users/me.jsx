@@ -6,7 +6,7 @@ const { Title } = Typography;
 
 const Me = () => {
 
-  const user = useUser();
+  const user = useUser({ redirectTo: '/auth/login' });
 
   return (
     <div>

@@ -1,16 +1,14 @@
-import { PostModel, UserModel } from "../../../models";
-import jwt from 'jsonwebtoken';
+import { PostModel } from "../../../models";
+import { getLoginSession } from "../../../lib/auth/auth";
+import { findUser } from '../../../lib/auth/user'
 
 export default async function handler(req, res) {
 
-  // Not Logged In
-/*   if (!req.cookies.jwt) {
-    return res.status(403).json({ error: 'Need Authentication' });
-  }; */
-
-  // Retrieve User Info from JWT cookie
-/*   const decodedToken = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET);
-  const user = await UserModel.findById(decodedToken.data._id).exec(); */
+  const session = await getLoginSession(req);
+  if (!session) {
+    res.send({ error: 'You must be sign in to view the protected content on this page.' });
+  };
+  const user = (session && (await findUser(session))) ?? null;
 
   // Get all posts
   if (req.method === 'GET') {

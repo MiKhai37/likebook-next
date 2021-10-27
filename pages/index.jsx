@@ -5,7 +5,7 @@ import { useUser } from '../lib/auth/hooks';
 
 
 export default function Home() {
-  const user = useUser()
+  useUser();
 
   return (
     <div className={styles.container}>
