@@ -25,14 +25,14 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 console.log('Database connection opened')
 
 const fakeUserCreate = async (cb) => {
-  
+
   const gender = faker.random.arrayElement(['female', 'male']);
-  
+
   const firstName = faker.name.firstName(gender);
   const lastName = faker.name.lastName(gender);
   const email = faker.internet.email(firstName, lastName, 'likemail.com');
   const username = faker.internet.userName(firstName, lastName);
-  
+
   //const password = faker.internet.password(len=12, memorable=true);
   const password = username;
 
@@ -124,11 +124,11 @@ const fakeCommentCreate = async (cb) => {
 const usersPopulate = (cb) => {
   console.log(`Users population (${nbUsers})`);
 
-  async.times(nbUsers, function(n, next) {
-    fakeUserCreate(function(err, user) {
+  async.times(nbUsers, function (n, next) {
+    fakeUserCreate(function (err, user) {
       next(err, user);
     });
-  }, function(err, users){
+  }, function (err, users) {
     if (err) {
       console.error('usersPopulate error:', err)
       cb(err, null)
@@ -143,11 +143,11 @@ const usersPopulate = (cb) => {
 const postsPopulate = (cb) => {
   console.log(`Posts population (${nbPosts})`)
 
-  async.times(nbPosts, function(n, next) {
-    fakePostCreate(function(err, post) {
+  async.times(nbPosts, function (n, next) {
+    fakePostCreate(function (err, post) {
       next(err, post);
     });
-  }, function(err, posts){
+  }, function (err, posts) {
     if (err) {
       console.error('postsPopulate error:', err)
       cb(err, null)
@@ -161,11 +161,11 @@ const postsPopulate = (cb) => {
 const commentsPopulate = (cb) => {
   console.log(`Comments population (${nbComments})`)
 
-  async.times(nbComments, function(n, next) {
-    fakeCommentCreate(function(err, comment) {
+  async.times(nbComments, function (n, next) {
+    fakeCommentCreate(function (err, comment) {
       next(err, comment);
     });
-  }, function(err, comments) {
+  }, function (err, comments) {
     if (err) {
       console.error('commentsPopulate error:', err)
       cb(err, null)
@@ -182,7 +182,7 @@ async.series([
   usersPopulate,
   postsPopulate,
   commentsPopulate
-], function(err, results) {
+], function (err, results) {
   if (err) {
     console.error('async series error', err);
   } else {
