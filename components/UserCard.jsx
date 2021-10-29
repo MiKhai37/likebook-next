@@ -7,10 +7,11 @@ import { UserAddOutlined, UserOutlined } from '@ant-design/icons';
 const UserCard = ({ user }) => {
   return (
     <>
-      <Card hoverable title={user.firstName + ' ' + user.lastName}
+      <Card hoverable title={user.username}
         extra={<Button><UserAddOutlined /></Button>}
         actions={[<Link href={`/users/${user._id}`} key='profile'><a><UserOutlined /></a></Link>]}>
         <img src={user?.avatar} alt='User Avatar' layout='fill'/>
+        <p>{user.firstName + ' ' + user.lastName}</p>
       </Card>
     </>
   )

@@ -5,7 +5,8 @@ export default async function handler(req, res) {
 
   const session = await getLoginSession(req);
   if (!session.admin) {
-    res.send({ error: 'You must be to use this.' });  };
+    res.send({ error: 'You must be admin to use this.' });
+  };
 
   // List of all comments
   if (req.method === 'GET') {

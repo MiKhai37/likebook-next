@@ -2,9 +2,9 @@
 require('dotenv').config({ path: '../.env' });
 
 const userArgs = process.argv.slice(2);
-const nbUsersMod = userArgs[0] || 100
-const nbPostsMod = userArgs[1] || 200
-const nbCommentsMod = userArgs[2] || 600
+const nbUsers = userArgs[0] || 100
+const nbPosts = userArgs[1] || 200
+const nbComments = userArgs[2] || 600
 
 const async = require('async');
 const faker = require('faker');
@@ -122,7 +122,6 @@ const fakeCommentCreate = async (cb) => {
 
 // async times runs n instances at the same times
 const usersPopulate = (cb) => {
-  const nbUsers = nbUsersMod||10;
   console.log(`Users population (${nbUsers})`);
 
   async.times(nbUsers, function(n, next) {
@@ -142,7 +141,6 @@ const usersPopulate = (cb) => {
 };
 
 const postsPopulate = (cb) => {
-  const nbPosts = nbPostsMod||30;
   console.log(`Posts population (${nbPosts})`)
 
   async.times(nbPosts, function(n, next) {
@@ -161,7 +159,6 @@ const postsPopulate = (cb) => {
 };
 
 const commentsPopulate = (cb) => {
-  const nbComments = nbCommentsMod||100;
   console.log(`Comments population (${nbComments})`)
 
   async.times(nbComments, function(n, next) {
