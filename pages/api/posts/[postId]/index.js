@@ -5,7 +5,7 @@ export default async function handler(req, res) {
 
   const session = await getLoginSession(req);
   if (!session) {
-    res.send({ error: 'You must be sign in to view the protected content on this page.' });
+    res.send({ error: 'You must be sign in to use this.' });
   };
 
   if (req.method === 'GET') {

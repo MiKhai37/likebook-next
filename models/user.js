@@ -8,7 +8,6 @@ const UserSchema = new Schema(
     lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true},
     username: { type: String, required: true },
-    password: { type: String, required: true },
     hash: { type: String, required: true },
     salt: { type: String, required: true },
     creationTimestamp: { type: Date, required: true },

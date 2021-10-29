@@ -30,7 +30,7 @@ const fakeUserCreate = async (cb) => {
   
   const firstName = faker.name.firstName(gender);
   const lastName = faker.name.lastName(gender);
-  const email = faker.internet.email(firstName, lastName, 'likemail');
+  const email = faker.internet.email(firstName, lastName, 'likemail.com');
   const username = faker.internet.userName(firstName, lastName);
   
   //const password = faker.internet.password(len=12, memorable=true);
@@ -47,7 +47,6 @@ const fakeUserCreate = async (cb) => {
       lastName,
       username,
       email,
-      password, // only for dev environement
       salt,
       hash,
       creationTimestamp: new Date().getTime(),

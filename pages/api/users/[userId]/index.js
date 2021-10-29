@@ -5,7 +5,7 @@ export default async function getUserApi(req, res) {
 
   const session = await getLoginSession(req);
   if (!session) {
-    res.send({ error: 'You must be sign in to view the protected content on this page.' });
+    res.send({ error: 'You must be sign in to use this.' });
   };
 
   const user = await UserModel.findById(req.query.userId).exec();

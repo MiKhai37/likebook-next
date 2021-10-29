@@ -1,10 +1,10 @@
-import { getLoginSession } from '../../../lib/auth/auth'
-import { findUser } from '../../../lib/auth/user'
+import { getLoginSession } from '../../../lib/auth/auth';
 
 export default async function user(req, res) {
   try {
     const session = await getLoginSession(req);
-    const user = (session && (await findUser(session))) ?? null;
+    //const user = (session && (await findUser(session))) ?? null;
+    const user = session ?? null;
 
     res.status(200).json({ user });
   } catch (error) {

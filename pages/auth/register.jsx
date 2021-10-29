@@ -41,7 +41,6 @@ const Register = () => {
   return (
     <>
       <Title>Create an account</Title>
-      <Title level={2} type='danger'>Warning: Do NOT use real password, For development reasons the password is saved in plain text in the DB</Title>
       {errorMsg && <p className="error">{errorMsg}</p>}
       <Form
         name="basic"
