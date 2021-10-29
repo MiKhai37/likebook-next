@@ -40,13 +40,13 @@ const Login = () => {
       <Form
         name="basic"
         labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
+        wrapperCol={{ span: 8 }}
         onFinish={onFinish}
       >
         <Form.Item
-          label="Email"
+          label="Username"
           name="username"
-          rules={[{ required: true, message: 'Please input your email!' }]}
+          rules={[{ required: true, message: 'Please input your username!' }]}
         >
           <Input />
         </Form.Item>

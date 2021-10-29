@@ -1,12 +1,12 @@
-import mongoose from 'mongoose';
-import { model, Schema } from 'mongoose';
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 
 const UserSchema = new Schema(
   {
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    email: { type: String, required: true, unique: true},
+    email: { type: String, required: true}, // to be unique
     username: { type: String, required: true },
     password: { type: String, required: true },
     hash: { type: String, required: true },
@@ -20,4 +20,4 @@ const UserSchema = new Schema(
   }
 );
 
-export const UserModel = mongoose.models.User || model('User', UserSchema); //Avoid overcreation of model
+module.exports = mongoose.model('User', UserSchema)

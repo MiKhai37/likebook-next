@@ -7,7 +7,7 @@ import Document, {
 
 import React from "react";
 
-// Solution against the useLayoutEffect warning issue, _document.jsx create only to solve this issue
+// Solution to avoid the useLayoutEffect warning issue, _document.jsx create only to solve this issue
 React.useLayoutEffect = React.useEffect;
 
 class MyDocument extends Document {

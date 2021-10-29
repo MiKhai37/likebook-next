@@ -1,11 +1,8 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import styles from '../styles/Home.module.css';
-import { useUser } from '../lib/auth/hooks';
-
 
 export default function Home() {
-  useUser();
 
   return (
     <div className={styles.container}>

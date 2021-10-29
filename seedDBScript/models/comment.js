@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import { model, Schema } from 'mongoose';
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const CommentSchema = new Schema(
   {
@@ -12,4 +12,4 @@ const CommentSchema = new Schema(
   }
 );
 
-export const CommentModel = mongoose.models.Comment || model('Comment', CommentSchema);
+module.exports = mongoose.model('Comment', CommentSchema);

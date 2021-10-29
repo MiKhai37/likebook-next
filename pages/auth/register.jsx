@@ -6,45 +6,47 @@ import { useUser } from '../../lib/auth/hooks';
 const { Title } = Typography;
 
 const Register = () => {
-  useUser({ redirectTo: '/users/me', redirectIfFound: true })
-  const [errorMsg, setErrorMsg] = useState('')
+  useUser({ redirectTo: '/users/me', redirectIfFound: true });
+  const [errorMsg, setErrorMsg] = useState('');
 
   const onFinish = async (values) => {
 
-    if (errorMsg) setErrorMsg('')
+    if (errorMsg) setErrorMsg('');
 
     const body = {
       firstName: values.firstName,
       lastName: values.lastName,
       email: values.email,
+      username: values.username,
       password: values.password,
-    }
+    };
 
     try {
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
-      })
+      });
       if (res.status === 200) {
-        Router.push('/auth/login')
+        Router.push('/auth/login');
       } else {
-        throw new Error(await res.text())
-      }
+        throw new Error(await res.text());
+      };
     } catch (error) {
-      console.error('An unexpected error happened occurred:', error)
-      setErrorMsg(error.message)
-    }
-  }
+      console.error('An unexpected error happened occurred:', error);
+      setErrorMsg(error.message);
+    };
+  };
 
   return (
     <>
-      <Title>Register</Title>
+      <Title>Create an account</Title>
+      <Title level={2} type='danger'>Warning: Do NOT use real password, For development reasons the password is saved in plain text in the DB</Title>
       {errorMsg && <p className="error">{errorMsg}</p>}
       <Form
         name="basic"
         labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
+        wrapperCol={{ span: 8 }}
         onFinish={onFinish}
       >
         <Form.Item
@@ -72,6 +74,14 @@ const Register = () => {
         </Form.Item>
 
         <Form.Item
+          label="Username"
+          name="username"
+          rules={[{ required: true, message: 'Please input your username!' }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
           label="Password"
           name="password"
           rules={[{ required: true, message: 'Please input your password!' }]}
@@ -85,9 +95,8 @@ const Register = () => {
           </Button>
         </Form.Item>
       </Form>
-
     </>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;
