@@ -33,14 +33,19 @@ const findTwoDistinctUsers = async (cb) => {
 
 const linkTwoUsers = async (cb) => {
   const users = await UserModel.find({}).exec();
-  const random = Math.floor(Math.random() * users.length);
-  const firstUser = users[random];
-  console.log('First User: ', firstUser._id);
 
-  const usersWithoutFirst = users.filter(user => user._id !== firstUser._id);
-  const randomBis = Math.floor(Math.random() * usersWithoutFirst.length);
-  const secondUser = usersWithoutFirst[randomBis];
-  console.log('Second User: ', secondUser._id);
+  let randomA;
+  let randomB;
+
+  while(randomA === randomB) {
+    randomA = Math.floor(Math.random() * users.length);
+    randomB = Math.floor(Math.random() * users.length);
+  };
+
+  const firstUser = users[randomA];
+  const secondUser = users[randomB];
+  //console.log('First User: ', firstUser._id);
+  //console.log('Second User: ', secondUser._id);
 
   const linkFirst = async (cb) => {
     await UserModel
@@ -98,25 +103,25 @@ const linkTwoUsers = async (cb) => {
 }
 
 const linkManyUsers = () => {
-  console.log(`Linking users (${nbFriendships})`);
+  console.time('Friendships');
+  console.log(`Linking user friendships (${nbFriendships})`);
 
   async.timesSeries(nbFriendships, function (n, next) {
-    console.log('friendship: ', n)
+    //console.log('friendship: ', n)
     linkTwoUsers(function (err, users) {
       next(err, users);
     });
   }, function (err, users) {
     if (err) {
       console.error('link many error: ', err);
-      //cb(err, null)
       return;
     };
     //console.log(users);
+    console.log(`${nbFriendships} friendships linked`)
     mongoose.connection.close();
     console.log('Database connection closed');
-    console.timeEnd();
+    console.timeEnd('Friendships');
     process.exit();
-    //cb(null, users);
   });
 };
 

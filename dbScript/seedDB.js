@@ -122,7 +122,7 @@ const fakeCommentCreate = async (cb) => {
 
 // async times runs n instances at the same times
 const usersPopulate = (cb) => {
-  console.log(`Users population (${nbUsers})`);
+  console.log(`Populating users (${nbUsers})`);
 
   async.times(nbUsers, function (n, next) {
     fakeUserCreate(function (err, user) {
@@ -141,7 +141,7 @@ const usersPopulate = (cb) => {
 };
 
 const postsPopulate = (cb) => {
-  console.log(`Posts population (${nbPosts})`)
+  console.log(`Populating posts (${nbPosts})`)
 
   async.times(nbPosts, function (n, next) {
     fakePostCreate(function (err, post) {
@@ -159,7 +159,7 @@ const postsPopulate = (cb) => {
 };
 
 const commentsPopulate = (cb) => {
-  console.log(`Comments population (${nbComments})`)
+  console.log(`Populating comments (${nbComments})`)
 
   async.times(nbComments, function (n, next) {
     fakeCommentCreate(function (err, comment) {
@@ -176,20 +176,23 @@ const commentsPopulate = (cb) => {
   })
 };
 
-// async series runs the functions in series then call the callback function
-console.time()
-async.series([
-  usersPopulate,
-  postsPopulate,
-  commentsPopulate
-], function (err, results) {
-  if (err) {
-    console.error('async series error', err);
-  } else {
-    console.log('Database seeded');
-  }
-  mongoose.connection.close();
-  console.log('Database connection closed')
-  console.timeEnd()
-  process.exit()
-});
+const dbSeeding = async () => {
+  console.time('Database seeding')
+  async.series([
+    usersPopulate,
+    postsPopulate,
+    commentsPopulate
+  ], function (err, results) {
+    if (err) {
+      console.error('async series error', err);
+    } else {
+      console.log('Database seeded');
+    }
+    mongoose.connection.close();
+    console.log('Database connection closed');
+    console.timeEnd('Database seeding');
+    process.exit();
+  });
+};
+
+dbSeeding();
