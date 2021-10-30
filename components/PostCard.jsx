@@ -16,18 +16,16 @@ const PostCard = ({ postId }) => {
   if (!postData) return 'Post loading...'
   if (!commentsData) return 'Comment loading...'
 
-  console.log(postData);
-
   const toggleLikePost = async () => {
     setErrorMsg('');
 
-    //mutate(`/api/posts/${postId}`, {...postData, post: post.like}, false )
-
+    
     try {
       const res = await fetch(`/api/posts/${postId}/like`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
       });
+      mutate(`/api/posts/${postId}`)
       if (res.status !== 200) {
         throw new Error(await res.text());
       };
