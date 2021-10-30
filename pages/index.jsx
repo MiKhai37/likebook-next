@@ -86,6 +86,16 @@ export default function Home() {
             </p>
           </a>
 
+          <a
+            href="https://github.com/marak/Faker.js/"
+            className={styles.card}
+          >
+            <h2>FakerJS</h2>
+            <p>
+              Fake profiles
+            </p>
+          </a>
+
         </div>
       </main>
     </div>
