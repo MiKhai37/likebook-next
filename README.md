@@ -14,4 +14,6 @@ To achieve this project, I'll use:
 - The MERN Stack (MongoDB: database, Express: back-end, React: front-end, NodeJS: front-end)
 - The NextJS Framework
 
-This project is more back-end focused.
+This project focuses on the back end.
+
+You can found the main version deployed on Vercel here: [LikeBook](https://likebook-next.vercel.app/ "Likebook")
