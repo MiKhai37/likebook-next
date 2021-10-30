@@ -30,6 +30,23 @@ const PostCard = ({ post }) => {
     }
   }
 
+  const toggleLikeComment = async (commentId) => {
+    setErrorMsg('');
+
+    try {
+      const res = await fetch(`/api/comments/${commentId}/like`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (res.status !== 200) {
+        throw new Error(await res.text());
+      };
+    } catch (err) {
+      console.error('Unexpected error: ', err);
+      setErrorMsg(err.message);
+    }
+  }
+
   const postAction = [
     <span key='comment'>
       <CommentOutlined key="comment" />
@@ -55,7 +72,7 @@ const PostCard = ({ post }) => {
           <li>
             <Comment
               actions={[
-                <span key='like'>
+                <span onClick={() => toggleLikeComment(item._id)} key='like'>
                   <LikeOutlined key="like" />
                   <span> {item.likes.length}</span>
                 </span>
