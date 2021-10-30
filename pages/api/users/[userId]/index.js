@@ -15,7 +15,7 @@ export default async function getUserApi(req, res) {
   };
 
   if (req.method === 'GET') {
-    return res.status(200).json({ message: "User found", data: user });
+    return res.status(200).json({ message: "User found", user });
   };
 
   if (req.method === 'PUT') {

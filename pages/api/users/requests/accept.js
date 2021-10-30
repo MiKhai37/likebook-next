@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   if (req.method === 'GET') {
     return res
       .status(200)
-      .json({ success: true, data: 'Nothing now'})
+      .json({ message: 'Nothing now'})
   }
 
   if (req.method === 'PUT') {
@@ -24,11 +24,11 @@ export default async function handler(req, res) {
     let userFriendRequests = user.friendRequests;
 
     if (asker.friends.includes(acceptedID)) {
-      return res.status(400).json({ success: false, data: 'Already friends' })
+      return res.status(400).json({ message: 'Already friends' })
     } 
 
     if (!userFriendRequests.includes(acceptedID)) {
-      return res.status(400).json({ success: false, data: 'This user doesn\'t request you' })
+      return res.status(400).json({ message: 'This user doesn\'t request you' })
     }
 
     // Add friendship relation to both user
@@ -44,7 +44,7 @@ export default async function handler(req, res) {
 
     return res
       .status(200)
-      .json({ success: true, data: updateUser })
+      .json({ updateUser })
 
   }
 

@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   if (req.method === 'GET') {
     return res
       .status(200)
-      .json({ success: true, data: decodedToken.data.friendRequests });
+      .json({ friendRequests: decodedToken.data.friendRequests });
     
   };
 
@@ -27,30 +27,30 @@ export default async function handler(req, res) {
     const receiverID = req.body.receiverID;
 
     if (!senderID || !receiverID) {
-      return res.status(400).json({ success: false, data: 'Missing/Uncompleted Body' });
+      return res.status(400).json({ message: 'Missing/Uncompleted Body' });
     };
 
     if (senderID === receiverID) {
-      return res.status(400).json({ success: false, data: 'Cannot friend yourself' });
+      return res.status(400).json({ message: 'Cannot friend yourself' });
     };
     
     let receiver = await UserModel.findOne({ _id: receiverID }).exec();
 
     if (receiver.friendRequests.includes(senderID)) {
-      return res.status(400).json({ success: false, data: 'Friend Request already sent'})
+      return res.status(400).json({ message: 'Friend Request already sent'})
     };
 
     if (receiver.friends.includes(senderID)) {
-      return res.status(400).json({ success: false, data: 'You are already friends'})
+      return res.status(400).json({ message: 'You are already friends'})
     };
     
     receiver.friendRequests = [...receiver.friendRequests, senderID]
   
     const updateReceiver = await receiver.save()
     
-    return res.status(200).json({ success: true, data: updateReceiver})
+    return res.status(200).json({ updateReceiver })
   }
 
-  return res.status(500).json({ success: false, data: 'Only GET and POST requests' })
+  return res.status(500).json({ message: 'Only GET and POST requests' })
 
 }

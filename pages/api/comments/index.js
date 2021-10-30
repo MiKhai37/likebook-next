@@ -10,10 +10,7 @@ export default async function handler(req, res) {
 
   if (req.method === 'GET') {
     const comments = await CommentModel.find().populate('post').exec();
-    const count = await CommentModel.countDocuments();
-
-    const data = { count, comments };
-    return res.status(200).json({ message: 'Comments found', data });
+    return res.status(200).json({ message: 'Comments found', comments });
   };
 
   if (req.method === 'POST') {
@@ -29,7 +26,7 @@ export default async function handler(req, res) {
       }
     );
 
-    return res.json({ message: 'Comment created', data: newComment });
+    return res.json({ message: 'Comment created', newComment });
 
   }
 

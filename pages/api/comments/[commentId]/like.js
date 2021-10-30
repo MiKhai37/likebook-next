@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
   const comment = await CommentModel.findById(req.query.commentId).exec();
   if (!comment) {
-    return res.status(404).json({ data: 'Post not found' });
+    return res.status(404).json({ message: 'Post not found' });
   };
 
   // Toggle like
@@ -27,6 +27,6 @@ export default async function handler(req, res) {
 
     const updatedComment = await comment.save();
 
-    return res.status(200).json({ message: 'Comment liked/unliked', data: updatedComment });
+    return res.status(200).json({ message: 'Comment liked/unliked', updatedComment });
   }
 }

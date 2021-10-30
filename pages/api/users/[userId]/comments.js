@@ -10,11 +10,8 @@ export default async function handler(req, res) {
 
   if (req.method === 'GET') {
     const comments = await CommentModel.find({ author: req.query.userId }).exec();
-    const count = await CommentModel.where({ author: req.query.userId }).countDocuments();
-
-    const data = { count, comments }
-    return res.status(200).json({ message:'Comments found', data });
+    return res.status(200).json({ message:'Comments found', comments });
   }
 
-  return res.status(400).json({ data: 'only GET request' });
+  return res.status(400).json({ message: 'only GET request' });
 }
