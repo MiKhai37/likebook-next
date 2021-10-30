@@ -13,7 +13,6 @@ const Users = () => {
   const { data: users } = useSWR("/api/users", fetcher);
 
   if (!users) return "Loading...";
-  console.log(users)
 
   return (
     <div>

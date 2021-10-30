@@ -10,11 +10,9 @@ const Friends = ({ friendIds }) => {
       <Row gutter={[32, 32]}>
       {friendIds?.map(friendId => {
         return (
-          <div key={friendId}>
-            <Col xs={24} sm={12} lg={6}>
+            <Col key={friendId} xs={24} sm={12} lg={6}>
               <UserCard userId={friendId} />
             </Col>
-          </div>
         )
       })}
       </Row>

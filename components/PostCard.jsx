@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card, Avatar, Comment, Tooltip, List, Typography } from 'antd'
 import { CommentOutlined, LikeOutlined, DislikeOutlined, TaobaoSquareFilled } from '@ant-design/icons';
 import useSWR, { useSWRConfig } from 'swr';
+import { useUser } from '../lib/auth/hooks';
 
 const { Title } = Typography;
 
@@ -19,7 +20,6 @@ const PostCard = ({ postId }) => {
   const toggleLikePost = async () => {
     setErrorMsg('');
 
-    
     try {
       const res = await fetch(`/api/posts/${postId}/like`, {
         method: 'PUT',

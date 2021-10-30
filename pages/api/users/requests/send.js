@@ -26,7 +26,7 @@ export default async function handler(req, res) {
     const senderID = userId;
     const receiverID = req.body.receiverID;
 
-    if (!senderID || !receiverID) {
+    if (!receiverID) {
       return res.status(400).json({ message: 'Missing/Uncompleted Body' });
     };
 
@@ -51,6 +51,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ updateReceiver })
   }
 
-  return res.status(500).json({ message: 'Only GET and POST requests' })
+  return res.status(500).json({ message: 'Only GET and PUT requests' })
 
 }
