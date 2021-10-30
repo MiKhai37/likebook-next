@@ -1,29 +1,75 @@
-import React from 'react'
-import { Card, Avatar, Comment, Tooltip, List } from 'antd'
-import { CommentOutlined, LikeOutlined, DislikeOutlined } from '@ant-design/icons';
-import useSWR from 'swr';
+import React, { useState } from 'react';
+import { Card, Avatar, Comment, Tooltip, List, Typography } from 'antd'
+import { CommentOutlined, LikeOutlined, DislikeOutlined, TaobaoSquareFilled } from '@ant-design/icons';
+import useSWR, { useSWRConfig } from 'swr';
+
+const { Title } = Typography;
 
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 
-const PostCard = ({ post }) => {
+const PostCard = ({ postId }) => {
+  const [errorMsg, setErrorMsg] = useState('');
+  const { mutate } = useSWRConfig()
+  const { data: postData } = useSWR(`/api/posts/${postId}`, fetcher);
+  const { data: commentsData } = useSWR(`/api/posts/${postId}/comments`, fetcher);
 
-  const { data: commentsData } = useSWR(`/api/posts/${post._id}/comments`, fetcher);
+  if (!postData) return 'Post loading...'
+  if (!commentsData) return 'Comment loading...'
 
-  const commentAction = [
-    <LikeOutlined key="like" />,
-    <DislikeOutlined key="dislike" />,
-  ];
+  console.log(postData);
+
+  const toggleLikePost = async () => {
+    setErrorMsg('');
+
+    //mutate(`/api/posts/${postId}`, {...postData, post: post.like}, false )
+
+    try {
+      const res = await fetch(`/api/posts/${postId}/like`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (res.status !== 200) {
+        throw new Error(await res.text());
+      };
+    } catch (err) {
+      console.error('Unexpected error: ', err);
+      setErrorMsg(err.message);
+    }
+  }
+
+  const toggleLikeComment = async (commentId) => {
+    setErrorMsg('');
+
+    try {
+      const res = await fetch(`/api/comments/${commentId}/like`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (res.status !== 200) {
+        throw new Error(await res.text());
+      };
+    } catch (err) {
+      console.error('Unexpected error: ', err);
+      setErrorMsg(err.message);
+    }
+  }
 
   const postAction = [
-    <CommentOutlined key="comment" />,
-    <LikeOutlined key="like" />,
-    <DislikeOutlined key="dislike" />,
+    <span key='comment'>
+      <CommentOutlined key="comment" />
+      <span> {commentsData?.data.comments.length}</span>
+    </span>,
+    <span onClick={toggleLikePost} key='like'>
+      <LikeOutlined key="like" />
+      <span> {postData?.data?.likes?.length}</span>
+    </span>
   ];
 
   return (
     <>
-      <Card title={post.author.username} extra={<Avatar src={post.author.avatar} />}actions={postAction} style={{ margin: '32px'}}>
-        <p>{post.textContent}</p>
+      <Card title={postData?.data?.author?.username} extra={<Avatar src={postData?.data?.author?.avatar} />}actions={postAction} style={{ margin: '32px'}}>
+        {errorMsg && <Title level={4} type='danger' className="error">{errorMsg}</Title>}
+        <p>{postData?.data?.textContent}</p>
       <List
         className="comment-list"
         header={`${commentsData?.data.comments.length} comments`}
@@ -32,8 +78,13 @@ const PostCard = ({ post }) => {
         renderItem={item => (
           <li>
             <Comment
-              actions={commentAction}
-              author={item.author._id}
+              actions={[
+                <span onClick={() => toggleLikeComment(item._id)} key='like'>
+                  <LikeOutlined key="like" />
+                  <span> {item.likes.length}</span>
+                </span>
+              ]}
+              author={item.author.username}
               avatar={item.author.avatar}
               content={item.textContent}
             />
