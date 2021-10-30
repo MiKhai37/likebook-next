@@ -122,7 +122,8 @@ const fakeCommentCreate = async (cb) => {
 
 // async times runs n instances at the same times
 const usersPopulate = (cb) => {
-  console.log(`Populating users (${nbUsers})`);
+  console.time('Users Populating')
+  console.log(`Users Populating (${nbUsers})`);
 
   async.times(nbUsers, function (n, next) {
     fakeUserCreate(function (err, user) {
@@ -135,13 +136,15 @@ const usersPopulate = (cb) => {
       return;
     };
     console.log(`${nbUsers} users created`)
+    console.timeEnd('Users Populating')
     cb(null, users)
   })
 
 };
 
 const postsPopulate = (cb) => {
-  console.log(`Populating posts (${nbPosts})`)
+  console.time('Posts Populating')
+  console.log(`Posts Populating (${nbPosts})`)
 
   async.times(nbPosts, function (n, next) {
     fakePostCreate(function (err, post) {
@@ -154,12 +157,14 @@ const postsPopulate = (cb) => {
       return;
     };
     console.log(`${nbPosts} posts created`)
+    console.timeEnd('Posts Populating')
     cb(null, posts)
   })
 };
 
 const commentsPopulate = (cb) => {
-  console.log(`Populating comments (${nbComments})`)
+  console.time('Comments Populating')
+  console.log(`Comments Populating (${nbComments})`)
 
   async.times(nbComments, function (n, next) {
     fakeCommentCreate(function (err, comment) {
@@ -172,6 +177,7 @@ const commentsPopulate = (cb) => {
       return;
     };
     console.log(`${nbComments} comments created`)
+    console.timeEnd('Comments Populating')
     cb(null, comments)
   })
 };
