@@ -9,8 +9,10 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const UserCard = ({ userId }) => {
 
-  const { data: userData, error: userError } = useSWR(`/api/users/${userId}`, fetcher);
+  const { data: userData } = useSWR(`/api/users/${userId}`, fetcher);
   const user = userData?.data
+
+  if (!userData) return 'User loading...'
 
   const extra = 
   <Button>

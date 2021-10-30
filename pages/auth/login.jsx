@@ -21,15 +21,15 @@ const Login = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
-      })
+      });
       if (res.status === 200) {
-        Router.push('/users/me')
+        Router.push('/users/me');
       } else {
-        throw new Error(await res.text())
+        throw new Error(await res.text());
       }
     } catch (error) {
-      console.error('An unexpected error happened occurred:', error)
-      setErrorMsg(error.message)
+      console.error('An unexpected error happened occurred:', error);
+      setErrorMsg(error.message);
     }
   };
 

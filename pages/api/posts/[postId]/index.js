@@ -10,18 +10,13 @@ export default async function handler(req, res) {
 
   if (req.method === 'GET') {
     const postId = req.query.postId;
-    const post = await PostModel.find({ _id: postId })
+    const post = await PostModel.findOne({ _id: postId }).populate('author')
 
     if (!post) {
       return res.status(404).json({ success: false, data: 'Post not found' });
     };
 
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ success: false, data: 'Post API Error' })
-    }
-
-    return res.status(200).json(post)
+    return res.status(200).json({data: post})
   }
 
   if (req.method === 'DELETE') {

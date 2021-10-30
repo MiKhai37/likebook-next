@@ -32,7 +32,7 @@ const User = () => {
       <Title level={3}>Posts</Title>
       {userPostsData?.data?.posts.map(post => {
         return (
-          <PostCard key={post._id} post={post} />
+          <PostCard key={post._id} postId={post._id} />
         )
       })}
     </div>

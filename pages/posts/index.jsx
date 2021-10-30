@@ -20,7 +20,7 @@ const Posts = () => {
       <Title>Post Timeline</Title>
       {postsData?.data.map(post => {
         return (
-          <PostCard key={post._id} post={post} />
+          <PostCard key={post._id} postId={post._id} />
         )
       })}
     </>
