@@ -36,7 +36,7 @@ const Login = () => {
   return (
     <>
       <Title>Login</Title>
-      {errorMsg && <p className="error">{errorMsg}</p>}
+      {errorMsg && <Title level={4} type='danger' className="error">{errorMsg}</Title>}
       <Form
         name="basic"
         labelCol={{ span: 8 }}

@@ -7,14 +7,17 @@ const { Title } = Typography;
 const Friends = ({ friendIds }) => {
   return (
     <>
-      <Title level={3}>Friends</Title>
+      <Row gutter={[32, 32]}>
       {friendIds?.map(friendId => {
         return (
-          <Col key={friendId} xs={24} sm={12} lg={6}>
-            <UserCard userId={friendId} />
-          </Col>
+          <div key={friendId}>
+            <Col xs={24} sm={12} lg={6}>
+              <UserCard userId={friendId} />
+            </Col>
+          </div>
         )
       })}
+      </Row>
     </>
   )
 }

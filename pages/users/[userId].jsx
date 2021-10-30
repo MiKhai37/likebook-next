@@ -27,9 +27,9 @@ const User = () => {
   return (
     <div>
       <Title>{userData?.data?.firstName + ' ' + userData?.data?.lastName}</Title>
-      <Row gutter={[32, 32]}>
-        <Friends friendIds={userData?.data?.friends} />
-      </Row>
+      <Title level={3}>Friends</Title>
+      <Friends friendIds={userData?.data?.friends} />
+      <Title level={3}>Posts</Title>
       {userPostsData?.data?.posts.map(post => {
         return (
           <PostCard key={post._id} post={post} />
