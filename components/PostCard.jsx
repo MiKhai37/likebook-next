@@ -22,7 +22,7 @@ const PostCard = ({ post }) => {
 
   return (
     <>
-      <Card title={post.author.username} extra={<Avatar src={post.author.avatar} />}actions={postAction}>
+      <Card title={post.author.username} extra={<Avatar src={post.author.avatar} />}actions={postAction} style={{ margin: '32px'}}>
         <p>{post.textContent}</p>
       <List
         className="comment-list"
