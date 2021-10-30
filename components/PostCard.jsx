@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Avatar, Comment, Tooltip, List } from 'antd'
+import { Card, Avatar, Comment, Tooltip, List, Typography } from 'antd'
 import { CommentOutlined, LikeOutlined, DislikeOutlined } from '@ant-design/icons';
 import useSWR from 'swr';
 
@@ -9,15 +9,15 @@ const PostCard = ({ post }) => {
 
   const { data: commentsData } = useSWR(`/api/posts/${post._id}/comments`, fetcher);
 
-  const commentAction = [
-    <LikeOutlined key="like" />,
-    <DislikeOutlined key="dislike" />,
-  ];
-
   const postAction = [
-    <CommentOutlined key="comment" />,
-    <LikeOutlined key="like" />,
-    <DislikeOutlined key="dislike" />,
+    <span key='comment'>
+      <CommentOutlined key="comment" />
+      <span> {commentsData?.data.comments.length}</span>
+    </span>,
+    <span key='like'>
+      <LikeOutlined key="like" />
+      <span> {post.likes.length}</span>
+    </span>
   ];
 
   return (
@@ -32,8 +32,13 @@ const PostCard = ({ post }) => {
         renderItem={item => (
           <li>
             <Comment
-              actions={commentAction}
-              author={item.author._id}
+              actions={[
+                <span key='like'>
+                  <LikeOutlined key="like" />
+                  <span> {item.likes.length}</span>
+                </span>
+              ]}
+              author={item.author.username}
               avatar={item.author.avatar}
               content={item.textContent}
             />

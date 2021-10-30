@@ -15,11 +15,11 @@ const Admin = () => {
     <>
       <Title level={1} >Admin Dashboard</Title>
       <Title level={3} >Users</Title>
-      <p>{users?.data?.users.length}</p>
+      <p>{users?.data?.users.length} Users</p>
       <Title level={3} >Posts</Title>
-      <p>{posts?.data?.posts.length}</p>
+      <p>{posts?.data?.posts.length} Posts</p>
       <Title level={3} >Comments</Title>
-      <p>{comments?.data?.comments.length}</p>
+      <p>{comments?.data?.comments.length} Comments</p>
     </>
   );
 };
