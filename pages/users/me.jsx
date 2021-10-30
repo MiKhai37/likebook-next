@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { Typography } from 'antd';
 import { useUser } from '../../lib/auth/hooks';

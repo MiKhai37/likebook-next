@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { Card, Button } from 'antd';
 import Link from 'next/link';
