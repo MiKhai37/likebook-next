@@ -20,8 +20,14 @@ export default async function handler(req, res) {
 
   if (req.method === 'PUT') {
     const acceptedID = req.body.acceptedId;
+    
+    if (!acceptedID) {
+      return res.status(400).json({ message: 'Missing/Uncompleted Body' });
+    };
+    
     let asker = await UserModel.findById(acceptedID);
     let userFriendRequests = user.friendRequests;
+
 
     if (asker.friends.includes(acceptedID)) {
       return res.status(400).json({ message: 'Already friends' })

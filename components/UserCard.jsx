@@ -40,20 +40,46 @@ const UserCard = ({ userId }) => {
     }
   }
 
+  const acceptFriendship = async () => {
+
+    const body = {
+      acceptedId: userId,
+    }
+
+    try {
+      const res = await fetch(`/api/users/requests/accept`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      mutate(`/api/users/${userId}`)
+      if (res.status !== 200) {
+        throw new Error(await res.text());
+      };
+    } catch (err) {
+      console.error('Unexpected error: ', err);
+      setErrorMsg(err.message);
+    }
+  }
+
   const extra = 
-  <Button onClick={askFriendship} >
-    {
+
       meFull.user.friends.includes(user.user._id)
       ?
+      <Button>
       <HeartOutlined />
+      </Button>
       :
       meFull.user.friendRequests.includes(user.user._id)
       ?
-      'accept ?'
+      <Button onClick={acceptFriendship} >
+      {'accept ?'}
+      </Button>
       :
+      <Button onClick={askFriendship} >
       <UserAddOutlined />
-    }
-  </Button>;
+      </Button>;
+    
 
   const actions =[
   <Link href={`/users/${user.user._id}`} key='profile'>
