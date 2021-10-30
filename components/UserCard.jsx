@@ -10,10 +10,9 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const UserCard = ({ userId }) => {
 
-  const { data: userData } = useSWR(`/api/users/${userId}`, fetcher);
-  const user = userData?.data
+  const { data: user } = useSWR(`/api/users/${userId}`, fetcher);
 
-  if (!userData) return 'User loading...'
+  if (!user) return 'User loading...'
 
   const extra = 
   <Button>
@@ -21,7 +20,7 @@ const UserCard = ({ userId }) => {
   </Button>;
 
   const actions =[
-  <Link href={`/users/${user?._id}`} key='profile'>
+  <Link href={`/users/${user.user._id}`} key='profile'>
     <a>
       <UserOutlined />
     </a>
@@ -30,12 +29,12 @@ const UserCard = ({ userId }) => {
 
   return (
     <>
-      <Card hoverable title={user?.username}
+      <Card hoverable title={user.user.username}
         extra={extra}
         actions={actions}>
-        <img src={user?.avatar} alt='User Avatar' layout='fill'/>
-        <p>{user?.firstName + ' ' + user?.lastName}</p>
-        <p>{`Friends: ${user?.friends.length}`}</p>
+        <img src={user.user.avatar} alt='User Avatar' layout='fill'/>
+        <p>{user.user.firstName + ' ' + user.user.lastName}</p>
+        <p>{`Friends: ${user.user.friends.length}`}</p>
       </Card>
     </>
   )

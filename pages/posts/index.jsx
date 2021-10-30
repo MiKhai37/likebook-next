@@ -10,15 +10,14 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const Posts = () => {
   useUser({ redirectTo: '/auth/login' })
-  const { data: postsData, error: postsError } = useSWR('/api/posts', fetcher);
+  const { data: posts } = useSWR('/api/posts', fetcher);
 
-  if (postsError) return "An error (posts) has occurred.";
-  if (!postsData) return "Loading Posts...";
+  if (!posts) return "Loading Posts...";
   
   return (
     <>
       <Title>Post Timeline</Title>
-      {postsData?.data.map(post => {
+      {posts.posts.map(post => {
         return (
           <PostCard key={post._id} postId={post._id} />
         )

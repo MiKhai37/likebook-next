@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import 'antd/dist/antd.css';
 
-import React from 'react'
+import React from 'react';
 
 import MainLayout from '../components/MainLayout';
 

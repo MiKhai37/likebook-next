@@ -10,11 +10,11 @@ const fetcher = (...args) => fetch(...args).then(res => res.json());
 const PostCard = ({ postId }) => {
   const [errorMsg, setErrorMsg] = useState('');
   const { mutate } = useSWRConfig()
-  const { data: postData } = useSWR(`/api/posts/${postId}`, fetcher);
-  const { data: commentsData } = useSWR(`/api/posts/${postId}/comments`, fetcher);
+  const { data: post } = useSWR(`/api/posts/${postId}`, fetcher);
+  const { data: comments } = useSWR(`/api/posts/${postId}/comments`, fetcher);
 
-  if (!postData) return 'Post loading...'
-  if (!commentsData) return 'Comment loading...'
+  if (!post) return 'Post loading...'
+  if (!comments) return 'Comments loading...'
 
   const toggleLikePost = async () => {
     setErrorMsg('');
@@ -43,6 +43,7 @@ const PostCard = ({ postId }) => {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
       });
+      mutate(`/api/posts/${postId}/comments`)
       if (res.status !== 200) {
         throw new Error(await res.text());
       };
@@ -55,24 +56,24 @@ const PostCard = ({ postId }) => {
   const postAction = [
     <span key='comment'>
       <CommentOutlined key="comment" />
-      <span> {commentsData?.data.comments.length}</span>
+      <span> {comments.comments.length}</span>
     </span>,
     <span onClick={toggleLikePost} key='like'>
       <LikeOutlined key="like" />
-      <span> {postData?.data?.likes?.length}</span>
+      <span> {post.post.likes.length}</span>
     </span>
   ];
 
   return (
     <>
-      <Card title={postData?.data?.author?.username} extra={<Avatar src={postData?.data?.author?.avatar} />}actions={postAction} style={{ margin: '32px'}}>
+      <Card title={post.post.author.username} extra={<Avatar src={post.post.author.avatar} />}actions={postAction} style={{ margin: '32px'}}>
         {errorMsg && <Title level={4} type='danger' className="error">{errorMsg}</Title>}
-        <p>{postData?.data?.textContent}</p>
+        <p>{post.post.textContent}</p>
       <List
         className="comment-list"
-        header={`${commentsData?.data.comments.length} comments`}
+        header={`${comments.comments.length} comments`}
         itemLayout='horizontal'
-        dataSource={commentsData?.data.comments}
+        dataSource={comments.comments}
         renderItem={item => (
           <li>
             <Comment
