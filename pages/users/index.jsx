@@ -23,7 +23,7 @@ const Users = () => {
           {usersData?.data.users.map(user => {
             return (
               <Col key={user._id} xs={24} sm={12} lg={6}>
-                <UserCard user={user} />
+                <UserCard userId={user._id} />
               </Col>
             )
           })}

@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { Typography, Row, Col } from 'antd';
 import PostCard from '../../components/PostCard';
+import Friends from '../../components/Friends';
 import { useUser } from '../../lib/auth/hooks';
 
 const { Title } = Typography;
@@ -26,6 +27,9 @@ const User = () => {
   return (
     <div>
       <Title>{userData?.data?.firstName + ' ' + userData?.data?.lastName}</Title>
+      <Row gutter={[32, 32]}>
+        <Friends friendIds={userData?.data?.friends} />
+      </Row>
       {userPostsData?.data?.posts.map(post => {
         return (
           <PostCard key={post._id} post={post} />

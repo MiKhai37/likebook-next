@@ -3,15 +3,36 @@ import { Card, Button } from 'antd';
 import Link from 'next/link';
 import Image from 'next/image'; // TODO use next/image, problem with authorized domain
 import { UserAddOutlined, UserOutlined } from '@ant-design/icons';
+import useSWR from 'swr';
 
-const UserCard = ({ user }) => {
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
+const UserCard = ({ userId }) => {
+
+  const { data: userData, error: userError } = useSWR(`/api/users/${userId}`, fetcher);
+  const user = userData?.data
+
+  const extra = 
+  <Button>
+    <UserAddOutlined />
+  </Button>;
+
+  const actions =[
+  <Link href={`/users/${user?._id}`} key='profile'>
+    <a>
+      <UserOutlined />
+    </a>
+  </Link>
+  ];
+
   return (
     <>
-      <Card hoverable title={user.username}
-        extra={<Button><UserAddOutlined /></Button>}
-        actions={[<Link href={`/users/${user._id}`} key='profile'><a><UserOutlined /></a></Link>]}>
+      <Card hoverable title={user?.username}
+        extra={extra}
+        actions={actions}>
         <img src={user?.avatar} alt='User Avatar' layout='fill'/>
-        <p>{user.firstName + ' ' + user.lastName}</p>
+        <p>{user?.firstName + ' ' + user?.lastName}</p>
+        <p>{`Friends: ${user?.friends.length}`}</p>
       </Card>
     </>
   )
