@@ -12,7 +12,17 @@ export default async function handler(req, res) {
 
   // List of all users
   if (req.method === 'GET') {
-    const users = await UserModel.find().exec();
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 0;
+    const skipIndex = (page - 1) * limit;
+
+    const users = await UserModel.find()
+      .sort({ _id: 1 })
+      .limit(limit)
+      .skip(skipIndex)
+      .exec();
+
     return res.status(200).json({ message: 'Users found', users });
   }
 

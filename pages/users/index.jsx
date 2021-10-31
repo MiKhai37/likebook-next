@@ -8,7 +8,7 @@ const { Title } = Typography;
 
 const Users = () => {
   useUser({ redirectTo: '/auth/login' });
-  const { data: users } = useSWR("/api/users?limit=20");
+  const { data: users } = useSWR("/api/users?limit=8");
 
   if (!users) return "Loading...";
 
