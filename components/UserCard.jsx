@@ -1,20 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react';
-import { Card, Button } from 'antd';
+import { Card, Button, Typography } from 'antd';
 import Link from 'next/link';
 import Image from 'next/image'; // TODO use next/image, problem with authorized domain
 import { UserAddOutlined, UserOutlined, HeartOutlined } from '@ant-design/icons';
 import useSWR, { useSWRConfig } from 'swr';
 import { useUser } from '../lib/auth/hooks';
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const { Title } = Typography;
+
 
 const UserCard = ({ userId }) => {
   const [errorMsg, setErrorMsg] = useState('');
   const me = useUser();
   const { mutate } = useSWRConfig()
-  const { data: meFull } = useSWR(`/api/users/${me._id}`, fetcher);
-  const { data: user } = useSWR(`/api/users/${userId}`, fetcher);
+  const { data: meFull } = useSWR(`/api/users/${me._id}`);
+  const { data: user } = useSWR(`/api/users/${userId}`);
 
   if (!user || !meFull) return 'User loading...'
 
@@ -97,9 +98,8 @@ const UserCard = ({ userId }) => {
 
   return (
     <>
-      <Card hoverable title={user.user.username}
-        extra={extra}
-        actions={actions}>
+      <Card hoverable title={user.user.username} extra={extra} actions={actions}>
+        {errorMsg && <Title level={4} type='danger' className="error">{errorMsg}</Title>}
         <img src={user.user.avatar} alt='User Avatar' layout='fill'/>
         <p>{user.user.firstName + ' ' + user.user.lastName}</p>
         <p>{`Friends: ${user.user.friends.length}`}</p>

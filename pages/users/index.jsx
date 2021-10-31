@@ -6,11 +6,9 @@ import { useUser } from '../../lib/auth/hooks';
 
 const { Title } = Typography;
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
-
 const Users = () => {
   useUser({ redirectTo: '/auth/login' });
-  const { data: users } = useSWR("/api/users", fetcher);
+  const { data: users } = useSWR("/api/users");
 
   if (!users) return "Loading...";
 

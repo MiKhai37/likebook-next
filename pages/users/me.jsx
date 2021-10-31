@@ -8,13 +8,11 @@ import Friends from '../../components/Friends';
 
 const { Title } = Typography;
 
-const fetcher = (...args) => fetch(...args).then(res => res.json());
-
 const Me = () => {
 
   const user = useUser({ redirectTo: '/auth/login' });
-  const { data: userFull } = useSWR(`/api/users/${user?._id}`, fetcher);
-  const { data: userPosts } = useSWR(`/api/users/${user?._id}/posts`, fetcher);
+  const { data: userFull } = useSWR(`/api/users/${user?._id}`);
+  const { data: userPosts } = useSWR(`/api/users/${user?._id}/posts`);
   
   if (!user) return 'loading...';
   if (!userFull) return 'loading...';

@@ -4,12 +4,10 @@ import { Typography } from 'antd';
 
 const { Title } = Typography
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
-
 const Admin = () => {
-  const { data: users } = useSWR("/api/admin/users", fetcher);
-  const { data: posts } = useSWR("/api/admin/posts", fetcher);
-  const { data: comments } = useSWR("/api/admin/comments", fetcher);
+  const { data: users } = useSWR("/api/admin/users");
+  const { data: posts } = useSWR("/api/admin/posts");
+  const { data: comments } = useSWR("/api/admin/comments");
 
   if (!users || !posts || !comments) return 'Loading...'
 

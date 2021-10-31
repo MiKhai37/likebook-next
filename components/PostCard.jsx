@@ -6,13 +6,11 @@ import { useUser } from '../lib/auth/hooks';
 
 const { Title } = Typography;
 
-const fetcher = (...args) => fetch(...args).then(res => res.json());
-
 const PostCard = ({ postId }) => {
   const [errorMsg, setErrorMsg] = useState('');
   const { mutate } = useSWRConfig()
-  const { data: post } = useSWR(`/api/posts/${postId}`, fetcher);
-  const { data: comments } = useSWR(`/api/posts/${postId}/comments`, fetcher);
+  const { data: post } = useSWR(`/api/posts/${postId}`);
+  const { data: comments } = useSWR(`/api/posts/${postId}/comments`);
 
   if (!post) return 'Post loading...'
   if (!comments) return 'Comments loading...'
