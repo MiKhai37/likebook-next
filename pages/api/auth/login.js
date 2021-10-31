@@ -2,6 +2,7 @@ import passport from 'passport';
 import nextConnect from 'next-connect';
 import { localStrategy } from '../../../lib/auth/password-local';
 import { setLoginSession } from '../../../lib/auth/auth';
+import dbConnect from '../../../lib/database/dbConnect';
 
 const authenticate = (method, req, res) =>
   new Promise((resolve, reject) => {
@@ -19,6 +20,7 @@ passport.use(localStrategy);
 export default nextConnect()
   .use(passport.initialize())
   .post(async (req, res) => {
+    await dbConnect();
     try {
       const user = await authenticate('local', req, res);
       // session is the payload to save in the token, it may contain basic info about the user

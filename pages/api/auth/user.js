@@ -1,6 +1,8 @@
 import { getLoginSession } from '../../../lib/auth/auth';
+import dbConnect from '../../../lib/database/dbConnect';
 
 export default async function user(req, res) {
+  await dbConnect();
   try {
     const session = await getLoginSession(req);
     //const user = (session && (await findUser(session))) ?? null; Too much info

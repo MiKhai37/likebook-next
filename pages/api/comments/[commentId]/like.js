@@ -1,8 +1,10 @@
 import { CommentModel } from "../../../../models";
 import { getLoginSession } from "../../../../lib/auth/auth";
 import { findUser } from "../../../../lib/auth/user";
+import dbConnect from "../../../../lib/database/dbConnect";
 
 export default async function handler(req, res) {
+  await dbConnect();
 
   const session = await getLoginSession(req);
   if (!session) {

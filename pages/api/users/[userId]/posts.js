@@ -1,7 +1,9 @@
 import { PostModel } from '../../../../models'
 import { getLoginSession } from '../../../../lib/auth/auth';
+import dbConnect from '../../../../lib/database/dbConnect';
 
 export default async function handler(req, res) {
+  await dbConnect();
 
   const session = await getLoginSession(req);
   if (!session) {
