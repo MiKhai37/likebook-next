@@ -23,7 +23,6 @@ export default async function handler(req, res) {
   };
 
   // Send a friend Request
-  // TODO Add 404 Error
   if (req.method === 'PUT') {
     const senderID = userId;
     const receiverID = req.body.receiverID;
@@ -38,21 +37,25 @@ export default async function handler(req, res) {
     
     let receiver = await UserModel.findOne({ _id: receiverID }).exec();
 
+    if (!receiver) {
+      return res.status(404).json({ message: 'User not found'});
+    }
+
     if (receiver.friendRequests.includes(senderID)) {
-      return res.status(400).json({ message: 'Friend Request already sent'})
+      return res.status(400).json({ message: 'Friend Request already sent'});
     };
 
     if (receiver.friends.includes(senderID)) {
-      return res.status(400).json({ message: 'You are already friends'})
+      return res.status(400).json({ message: 'You are already friends'});
     };
     
-    receiver.friendRequests = [...receiver.friendRequests, senderID]
+    receiver.friendRequests = [...receiver.friendRequests, senderID];
   
-    const updateReceiver = await receiver.save()
+    const updateReceiver = await receiver.save();
     
-    return res.status(200).json({ updateReceiver })
+    return res.status(200).json({ updateReceiver });
   }
 
-  return res.status(500).json({ message: 'Only GET and PUT requests' })
+  return res.status(500).json({ message: 'Only GET and PUT requests' });
 
 }

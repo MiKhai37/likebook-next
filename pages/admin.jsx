@@ -13,6 +13,8 @@ const Admin = () => {
 
   if (!users || !posts || !comments) return 'Loading...'
 
+  console.log(comments)
+
   return (
     <>
       <Title level={1} >Admin Dashboard</Title>

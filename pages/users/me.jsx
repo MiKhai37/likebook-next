@@ -20,6 +20,8 @@ const Me = () => {
   if (!userFull) return 'loading...';
   if (!userPosts) return 'loading...';
 
+  console.log(userPosts)
+
   return (
     <>
       <Title>{`${user.username} (${user.firstName} ${user.lastName})`}</Title>

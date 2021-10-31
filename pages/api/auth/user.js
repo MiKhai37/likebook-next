@@ -5,7 +5,7 @@ export default async function user(req, res) {
   await dbConnect();
   try {
     const session = await getLoginSession(req);
-    //const user = (session && (await findUser(session))) ?? null; Too much info
+    //const user = (session && (await findUser(session))) ?? null; // Too much info
     const user = session ?? null;
 
     res.status(200).json({ user });

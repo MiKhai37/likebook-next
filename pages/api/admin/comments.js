@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   // List of all comments
   if (req.method === 'GET') {
     const comments = await CommentModel.find().exec();
-    return res.status(200).json({ message: 'All comments', comments });
+    return res.status(200).json({ comments });
   }
   
 }

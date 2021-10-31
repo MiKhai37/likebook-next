@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
   if (req.method === 'GET') {
     const posts = await PostModel.find({ author: req.query.userId }).populate('author').exec();
-    return res.status(200).json({ message: 'Posts found', posts });
+    return res.status(200).json({ posts });
   }
 
   return res.status(400).json({ message: 'only GET request' });

@@ -12,8 +12,8 @@ const UserSchema = new Schema(
     salt: { type: String, required: true },
     creationTimestamp: { type: Date, required: true },
     avatar: { type: String },
-    friends: [{ type: String, ref:'User'}],
-    friendRequests: [{ type: String, ref: "User" }],
+    friends: [{ type: Schema.Types.ObjectId, ref:'User'}],
+    friendRequests: [{ type: Schema.Types.ObjectId, ref: "User" }],
     provider: { type: String },
     providerId: { type: String },
   }
