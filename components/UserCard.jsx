@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react';
-import { Card, Button, Typography } from 'antd';
+import { Card, Button, Typography, Spin } from 'antd';
 import Link from 'next/link';
 import Image from 'next/image'; // TODO use next/image, problem with authorized domain
 import { UserAddOutlined, UserOutlined, HeartOutlined } from '@ant-design/icons';
@@ -12,12 +12,11 @@ const { Title } = Typography;
 
 const UserCard = ({ userId }) => {
   const [errorMsg, setErrorMsg] = useState('');
-  const me = useUser();
   const { mutate } = useSWRConfig()
-  const { data: meFull } = useSWR(`/api/users/${me._id}`);
+  const { data: me } = useSWR('/api/auth/user');
   const { data: user } = useSWR(`/api/users/${userId}`);
 
-  if (!user || !meFull) return 'User loading...'
+  if (!user || !me) return <Card><Spin /></Card>
 
   const askFriendship = async () => {
 
@@ -65,19 +64,19 @@ const UserCard = ({ userId }) => {
 
   const extra = 
 
-      meFull.user.friends.includes(user.user._id)
+      me.user.friends.includes(user.user._id)
       ?
       <Button>
       <HeartOutlined />
       </Button>
       :
-      meFull.user.friendRequests.includes(user.user._id)
+      me.user.friendRequests.includes(user.user._id)
       ?
       <Button onClick={acceptFriendship} >
       {'accept'}
       </Button>
       :
-      user.user.friendRequests.includes(meFull.user._id)
+      user.user.friendRequests.includes(me.user._id)
       ?
       <Button onClick={askFriendship} >
       {'waiting'}

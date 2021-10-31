@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
-import { Typography } from 'antd';
+import { Typography, Spin } from 'antd';
 import { useUser } from '../../lib/auth/hooks';
 import useSWR from 'swr';
 import PostCard from '../../components/PostCard';
@@ -10,22 +10,19 @@ const { Title } = Typography;
 
 const Me = () => {
 
-  const user = useUser({ redirectTo: '/auth/login' });
-  const { data: userFull } = useSWR(`/api/users/${user?._id}`);
-  const { data: userPosts } = useSWR(`/api/users/${user?._id}/posts`);
-  
-  if (!user) return 'loading...';
-  if (!userFull) return 'loading...';
-  if (!userPosts) return 'loading...';
+  useUser({ redirectTo: '/auth/login' });
+  const { data: user } = useSWR('/api/auth/user');
+  const { data: userPosts } = useSWR(`/api/users/${user?.user._id}/posts`);
 
-  console.log(userPosts)
+  if (!user) return <Spin />;
+  if (!userPosts) return <Spin />;
 
   return (
     <>
-      <Title>{`${user.username} (${user.firstName} ${user.lastName})`}</Title>
-      <img src={user.avatar} alt='User Avatar' layout='fill'/>
+      <Title>{`${user.user.username} (${user.user.firstName} ${user.user.lastName})`}</Title>
+      <img src={user.user.avatar} alt='User Avatar' layout='fill'/>
       <Title level={3}>My Friends</Title>
-      <Friends friendIds={userFull.user.friends} />
+      <Friends friendIds={user.user.friends} />
       <Title level={3}>My Posts</Title>
       {userPosts.posts.map(post => {
         return (

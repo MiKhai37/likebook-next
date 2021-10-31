@@ -24,8 +24,8 @@ export default nextConnect()
     try {
       const user = await authenticate('local', req, res);
       // session is the payload to save in the token, it may contain basic info about the user
-      const { _id, firstName, lastName, email, username, avatar } = user;
-      const session = { _id, firstName, lastName, email, username, avatar };
+      const { _id, username } = user;
+      const session = { _id, username };
       await setLoginSession(res, session);
 
       res.status(200).send({ done: true });
