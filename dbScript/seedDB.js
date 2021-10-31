@@ -8,8 +8,8 @@ const nbComments = userArgs[2] || 600
 
 const async = require('async');
 const faker = require('faker');
-//faker.seed(37);
-const crypto = require('crypto');
+faker.seed(37);
+const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 
 const UserModel = require('./models/user');
@@ -36,10 +36,8 @@ const fakeUserCreate = async (cb) => {
   //const password = faker.internet.password(len=12, memorable=true);
   const password = username;
 
-  const salt = crypto.randomBytes(16).toString('hex')
-  const hash = crypto
-    .pbkdf2Sync(password, salt, 1000, 64, 'sha512')
-    .toString('hex');
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(password, salt);
 
   const newUser = await new UserModel(
     {
