@@ -12,7 +12,7 @@ const Me = () => {
 
   useUser({ redirectTo: '/auth/login' });
   const { data: user } = useSWR('/api/auth/user');
-  const { data: userPosts } = useSWR(`/api/users/${user?.user._id}/posts`);
+  const { data: userPosts } = useSWR(`/api/posts/me`);
 
   if (!user) return <Spin />;
   if (!userPosts) return <Spin />;

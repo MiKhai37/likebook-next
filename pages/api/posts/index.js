@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   if (!session) {
     res.send({ error: 'You must be sign in to use this.' });
   };
-  const user = (session && (await findUser(session))) ?? null;
+  
 
   // Get all posts
   if (req.method === 'GET') {
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
 
   // Create a post
   if (req.method === 'POST') {
-
+    const user = (session && (await findUser(session))) ?? null;
     const post = await PostModel.create(
       {
         author: user._id,
