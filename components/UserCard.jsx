@@ -73,7 +73,13 @@ const UserCard = ({ userId }) => {
       meFull.user.friendRequests.includes(user.user._id)
       ?
       <Button onClick={acceptFriendship} >
-      {'accept ?'}
+      {'accept'}
+      </Button>
+      :
+      user.user.friendRequests.includes(meFull.user._id)
+      ?
+      <Button onClick={askFriendship} >
+      {'waiting'}
       </Button>
       :
       <Button onClick={askFriendship} >
